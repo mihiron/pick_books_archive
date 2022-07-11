@@ -149,6 +149,7 @@ dev_dependencies:
 
   # Other
   flutter_launcher_icons: ^0.9.3
+  flutter_native_splash: ^2.2.4
 
 flutter_gen:
   output: lib/gen/
@@ -176,8 +177,12 @@ flutter:
 
 # flutter_launcher_iconsを利用してアイコンのリサイズする場合はここを設定する
 flutter_icons:
- android: true
- ios: true
- image_path: "assets/images/icon.png"
- adaptive_icon_background: "#2196F3"
+  android: true
+  ios: true
+  image_path: "assets/images/icon.png"
+  adaptive_icon_background: "#2196F3"
+
+flutter_native_splash:
+  color: '#2196F3'
+  image: 'assets/images/splash.png'
 
