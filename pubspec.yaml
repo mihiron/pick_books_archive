@@ -1,0 +1,185 @@
+name: flutter_app_template
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+
+  # Logger
+  simple_logger:
+
+  # LocalDatabase
+  shared_preferences:
+
+  # Riverpod
+  flutter_hooks: ^0.18.4
+  hooks_riverpod: ^1.0.4
+  freezed_annotation: ^2.0.3
+  json_annotation:
+
+  # Dialog
+  adaptive_dialog:
+
+  # Access local storage
+  path_provider:
+
+  # Date
+  intl:
+
+  # Reactive
+  rxdart:
+
+  # Data share
+  share_plus:
+
+  # WebView
+  flutter_inappwebview:
+
+  # Launcher
+  url_launcher:
+  map_launcher:
+
+  # Setting
+  app_settings: ^4.1.6
+
+  # Review
+  launch_review:
+  app_review:
+
+  # Text
+  auto_size_text:
+
+  # Carousel
+  carousel_slider:
+
+  # Switch
+  toggle_switch:
+
+  # Transition
+  page_transition:
+
+  # Image
+  image_picker:
+  image_gallery_saver:
+  image_cropper:
+  flutter_image_compress:
+  extended_image: ^6.2.1
+
+  # Picker
+  numberpicker:
+
+  # PullToRefresh
+  pull_to_refresh:
+
+  # Scroll
+  extended_nested_scroll_view: ^6.0.0-dev.1
+
+  # Permission
+  permission_handler:
+
+  # Firebase
+  firebase_core: ^1.16.0
+  firebase_analytics:
+  cloud_firestore:
+  firebase_auth:
+  firebase_storage:
+  cloud_functions:
+  firebase_messaging:
+  firebase_crashlytics:
+
+  # LocalNotification
+  flutter_local_notifications: ^10.0.0-dev.13
+  flutter_native_timezone:
+
+  # Preview
+  # TODO 一旦Flutter3系とfreezed2系が対応されるまでお見送り
+#  device_preview: ^1.0.0
+
+  # Api
+  retrofit:
+  dio:
+
+  # Widget
+  flutter_fadein:
+  flutter_cupertino_datetime_picker:
+  flutter_app_badger:
+  badges:
+  flutter_slidable: ^1.2.1
+  dismissible_page:
+  another_flushbar: ^1.10.29
+
+  # Other
+  uuid:
+  package_info_plus:
+  synchronized:
+  nonce:
+  crypto:
+  hashids2:
+  encrypt:
+  flutter_svg:
+  recase:
+  device_info:
+  flutter_linkify:
+  timezone:
+  collection:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # Static analysis
+  pedantic_mono: ^1.19.0+1
+
+  # Serializer
+  json_serializable:
+
+  # Code generator
+  build_runner: ^2.1.10
+  freezed: ^2.0.3+1
+  flutter_gen_runner:
+  retrofit_generator:
+
+  # Other
+  flutter_launcher_icons:
+
+flutter_gen:
+  output: lib/gen/
+  colors:
+    inputs:
+      - assets/color/colors.xml
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+
+  # カスタムフォントを利用する場合はここを設定する
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+
+# flutter_launcher_iconsを利用してアイコンのリサイズする場合はここを設定する
+#flutter_icons:
+#  android: true
+#  ios: true
+#  image_path_android: "assets/icon/icon_android.png"
+#  image_path_ios: "assets/icon/icon_ios.png"
+#  adaptive_icon_foreground: "assets/icon/adaptive_icon_foreground.png"
+#  adaptive_icon_background: "#F4A281"
+
