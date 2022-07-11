@@ -13,7 +13,7 @@ class App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
-      title: 'テンプレアプリ', // TODO(shohei): アプリ名を設定
+      title: 'Pick Books',
       useInheritedMediaQuery: true,
       scrollBehavior: const HaveScrollBarBehavior(),
       theme: getAppTheme(),

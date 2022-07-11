@@ -1,4 +1,4 @@
-import 'package:flutter_app_template/utils/logger.dart';
+import 'package:pick_books/utils/logger.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../exceptions/app_exception.dart';
