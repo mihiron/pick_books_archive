@@ -67,7 +67,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.app"
+        applicationId "com.pick_books.app"
         // flavor設定
         if (dartEnvironmentVariables.FLAVOR != 'prod') {
             applicationIdSuffix ".${dartEnvironmentVariables.FLAVOR}"
@@ -77,7 +77,7 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         resValue "string", "app_name", (dartEnvironmentVariables.FLAVOR == 'prod' ? '' : "${dartEnvironmentVariables.FLAVOR}.") +
-                "テンプレアプリ"
+                "Pick Books"
     }
 
     signingConfigs {

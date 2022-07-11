@@ -1,4 +1,4 @@
-package com.example.app
+package com.pick_books.app
 
 import io.flutter.embedding.android.FlutterActivity
 
