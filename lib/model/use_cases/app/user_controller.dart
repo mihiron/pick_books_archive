@@ -54,10 +54,6 @@ class UserController extends StateNotifier<List<User>> {
     if (userId == null) {
       throw AppException(title: 'ログインしてください');
     }
-    final docId = user.userId;
-    if (docId == null) {
-      return;
-    }
     final data = user.copyWith(updatedAt: DateTime.now());
     await _documentRepository.update(
       User.docPath(userId),
