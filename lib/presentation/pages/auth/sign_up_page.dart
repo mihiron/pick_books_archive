@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pick_books/extensions/context_extension.dart';
 import 'package:pick_books/extensions/exception_extension.dart';
+import 'package:pick_books/model/use_cases/app/user_controller.dart';
 import 'package:pick_books/model/use_cases/auth/email/create_user_with_email_and_password.dart';
 import 'package:pick_books/model/use_cases/auth/email/send_email_verification.dart';
 import 'package:pick_books/presentation/pages/auth/email_check.dart';
@@ -62,6 +63,9 @@ class SignUpPage extends HookConsumerWidget {
                     _passwordController.text,
                   );
                   await ref.read(sendEmailVerificationProvider)();
+                  await ref
+                      .read(userProvider.notifier)
+                      .create(_emailController.text);
                   unawaited(
                     EmailCheckPage.show(
                       context,
