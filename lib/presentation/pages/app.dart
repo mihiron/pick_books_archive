@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../../utils/provider.dart';
-import '../res/theme.dart';
-import '../widgets/have_scroll_bar_behavior.dart';
-import 'start_up_page.dart';
+import 'package:pick_books/presentation/pages/auth/sign_in_page.dart';
+import 'package:pick_books/presentation/res/theme.dart';
+import 'package:pick_books/presentation/widgets/have_scroll_bar_behavior.dart';
+import 'package:pick_books/utils/provider.dart';
 
 class App extends ConsumerWidget {
   const App({super.key});
@@ -28,7 +27,7 @@ class App extends ConsumerWidget {
       supportedLocales: const [
         Locale('ja', 'JP'),
       ],
-      home: const StartUpPage(),
+      home: SignInPage(),
     );
   }
 }
