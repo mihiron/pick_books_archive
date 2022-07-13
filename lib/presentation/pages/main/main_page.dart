@@ -4,9 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pick_books/extensions/context_extension.dart';
 import 'package:pick_books/presentation/pages/app/book_page.dart';
-import 'package:pick_books/presentation/pages/sample/github_users/with_state_notifier/github_users_page.dart';
-import 'package:pick_books/presentation/pages/sample/memo/memo_page.dart';
-import 'package:pick_books/presentation/pages/sample/setting/setting_page.dart';
+import 'package:pick_books/presentation/pages/app/profile_page.dart';
 
 import 'tab_navigator.dart';
 
@@ -26,14 +24,10 @@ class MainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final widgets = useState<List<Widget>>([
       const BookPage(),
-      const GithubUsersPage(),
-      const MemoPage(),
-      const SettingPage(),
+      const ProfilePage(),
     ]);
 
     final navigatorKeys = useState([
-      GlobalKey<NavigatorState>(),
-      GlobalKey<NavigatorState>(),
       GlobalKey<NavigatorState>(),
       GlobalKey<NavigatorState>(),
     ]);
@@ -66,23 +60,11 @@ class MainPage extends HookConsumerWidget {
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'タブ1',
-              tooltip: '',
+              label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.people),
-              label: 'タブ2',
-              tooltip: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.edit),
-              label: 'タブ3',
-              tooltip: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'タブ5',
-              tooltip: '',
+              icon: Icon(Icons.account_circle),
+              label: 'MyPage',
             ),
           ],
           type: BottomNavigationBarType.fixed,

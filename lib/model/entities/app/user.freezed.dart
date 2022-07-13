@@ -24,7 +24,7 @@ mixin _$User {
   String get email => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   StorageFile? get image => throw _privateConstructorUsedError;
-  int? get bookCount => throw _privateConstructorUsedError;
+  int get bookCount => throw _privateConstructorUsedError;
   @DateTimeTimestampConverter()
   DateTime? get createdAt => throw _privateConstructorUsedError;
   @DateTimeTimestampConverter()
@@ -44,7 +44,7 @@ abstract class $UserCopyWith<$Res> {
       String email,
       String? name,
       StorageFile? image,
-      int? bookCount,
+      int bookCount,
       @DateTimeTimestampConverter() DateTime? createdAt,
       @DateTimeTimestampConverter() DateTime? updatedAt});
 
@@ -89,7 +89,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       bookCount: bookCount == freezed
           ? _value.bookCount
           : bookCount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -123,7 +123,7 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String email,
       String? name,
       StorageFile? image,
-      int? bookCount,
+      int bookCount,
       @DateTimeTimestampConverter() DateTime? createdAt,
       @DateTimeTimestampConverter() DateTime? updatedAt});
 
@@ -170,7 +170,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
       bookCount: bookCount == freezed
           ? _value.bookCount
           : bookCount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -191,7 +191,7 @@ class _$_User extends _User {
       required this.email,
       this.name,
       this.image,
-      this.bookCount,
+      this.bookCount = 0,
       @DateTimeTimestampConverter() this.createdAt,
       @DateTimeTimestampConverter() this.updatedAt})
       : super._();
@@ -207,7 +207,8 @@ class _$_User extends _User {
   @override
   final StorageFile? image;
   @override
-  final int? bookCount;
+  @JsonKey()
+  final int bookCount;
   @override
   @DateTimeTimestampConverter()
   final DateTime? createdAt;
@@ -263,7 +264,7 @@ abstract class _User extends User {
       required final String email,
       final String? name,
       final StorageFile? image,
-      final int? bookCount,
+      final int bookCount,
       @DateTimeTimestampConverter() final DateTime? createdAt,
       @DateTimeTimestampConverter() final DateTime? updatedAt}) = _$_User;
   const _User._() : super._();
@@ -279,7 +280,7 @@ abstract class _User extends User {
   @override
   StorageFile? get image => throw _privateConstructorUsedError;
   @override
-  int? get bookCount => throw _privateConstructorUsedError;
+  int get bookCount => throw _privateConstructorUsedError;
   @override
   @DateTimeTimestampConverter()
   DateTime? get createdAt => throw _privateConstructorUsedError;

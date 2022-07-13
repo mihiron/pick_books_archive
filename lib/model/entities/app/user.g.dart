@@ -13,7 +13,7 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       image: json['image'] == null
           ? null
           : StorageFile.fromJson(json['image'] as Map<String, dynamic>),
-      bookCount: json['bookCount'] as int?,
+      bookCount: json['bookCount'] as int? ?? 0,
       createdAt: const DateTimeTimestampConverter()
           .fromJson(json['createdAt'] as Timestamp?),
       updatedAt: const DateTimeTimestampConverter()
