@@ -20,10 +20,11 @@ Book _$BookFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Book {
-  String? get bookId => throw _privateConstructorUsedError;
-  String? get title => throw _privateConstructorUsedError;
+  String get bookId => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
   String? get url => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  StorageFile? get image => throw _privateConstructorUsedError;
   @DateTimeTimestampConverter()
   DateTime? get createdAt => throw _privateConstructorUsedError;
   @DateTimeTimestampConverter()
@@ -39,12 +40,15 @@ abstract class $BookCopyWith<$Res> {
   factory $BookCopyWith(Book value, $Res Function(Book) then) =
       _$BookCopyWithImpl<$Res>;
   $Res call(
-      {String? bookId,
-      String? title,
+      {String bookId,
+      String title,
       String? url,
       String? description,
+      StorageFile? image,
       @DateTimeTimestampConverter() DateTime? createdAt,
       @DateTimeTimestampConverter() DateTime? updatedAt});
+
+  $StorageFileCopyWith<$Res>? get image;
 }
 
 /// @nodoc
@@ -61,6 +65,7 @@ class _$BookCopyWithImpl<$Res> implements $BookCopyWith<$Res> {
     Object? title = freezed,
     Object? url = freezed,
     Object? description = freezed,
+    Object? image = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -68,11 +73,11 @@ class _$BookCopyWithImpl<$Res> implements $BookCopyWith<$Res> {
       bookId: bookId == freezed
           ? _value.bookId
           : bookId // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       url: url == freezed
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -81,6 +86,10 @@ class _$BookCopyWithImpl<$Res> implements $BookCopyWith<$Res> {
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as StorageFile?,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -91,6 +100,17 @@ class _$BookCopyWithImpl<$Res> implements $BookCopyWith<$Res> {
               as DateTime?,
     ));
   }
+
+  @override
+  $StorageFileCopyWith<$Res>? get image {
+    if (_value.image == null) {
+      return null;
+    }
+
+    return $StorageFileCopyWith<$Res>(_value.image!, (value) {
+      return _then(_value.copyWith(image: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -99,12 +119,16 @@ abstract class _$$_BookCopyWith<$Res> implements $BookCopyWith<$Res> {
       __$$_BookCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? bookId,
-      String? title,
+      {String bookId,
+      String title,
       String? url,
       String? description,
+      StorageFile? image,
       @DateTimeTimestampConverter() DateTime? createdAt,
       @DateTimeTimestampConverter() DateTime? updatedAt});
+
+  @override
+  $StorageFileCopyWith<$Res>? get image;
 }
 
 /// @nodoc
@@ -122,6 +146,7 @@ class __$$_BookCopyWithImpl<$Res> extends _$BookCopyWithImpl<$Res>
     Object? title = freezed,
     Object? url = freezed,
     Object? description = freezed,
+    Object? image = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -129,11 +154,11 @@ class __$$_BookCopyWithImpl<$Res> extends _$BookCopyWithImpl<$Res>
       bookId: bookId == freezed
           ? _value.bookId
           : bookId // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       url: url == freezed
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -142,6 +167,10 @@ class __$$_BookCopyWithImpl<$Res> extends _$BookCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as StorageFile?,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -158,10 +187,11 @@ class __$$_BookCopyWithImpl<$Res> extends _$BookCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Book extends _Book {
   const _$_Book(
-      {this.bookId,
-      this.title,
+      {required this.bookId,
+      required this.title,
       this.url,
       this.description,
+      this.image,
       @DateTimeTimestampConverter() this.createdAt,
       @DateTimeTimestampConverter() this.updatedAt})
       : super._();
@@ -169,13 +199,15 @@ class _$_Book extends _Book {
   factory _$_Book.fromJson(Map<String, dynamic> json) => _$$_BookFromJson(json);
 
   @override
-  final String? bookId;
+  final String bookId;
   @override
-  final String? title;
+  final String title;
   @override
   final String? url;
   @override
   final String? description;
+  @override
+  final StorageFile? image;
   @override
   @DateTimeTimestampConverter()
   final DateTime? createdAt;
@@ -185,7 +217,7 @@ class _$_Book extends _Book {
 
   @override
   String toString() {
-    return 'Book(bookId: $bookId, title: $title, url: $url, description: $description, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Book(bookId: $bookId, title: $title, url: $url, description: $description, image: $image, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -198,6 +230,7 @@ class _$_Book extends _Book {
             const DeepCollectionEquality().equals(other.url, url) &&
             const DeepCollectionEquality()
                 .equals(other.description, description) &&
+            const DeepCollectionEquality().equals(other.image, image) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality().equals(other.updatedAt, updatedAt));
   }
@@ -210,6 +243,7 @@ class _$_Book extends _Book {
       const DeepCollectionEquality().hash(title),
       const DeepCollectionEquality().hash(url),
       const DeepCollectionEquality().hash(description),
+      const DeepCollectionEquality().hash(image),
       const DeepCollectionEquality().hash(createdAt),
       const DeepCollectionEquality().hash(updatedAt));
 
@@ -226,10 +260,11 @@ class _$_Book extends _Book {
 
 abstract class _Book extends Book {
   const factory _Book(
-      {final String? bookId,
-      final String? title,
+      {required final String bookId,
+      required final String title,
       final String? url,
       final String? description,
+      final StorageFile? image,
       @DateTimeTimestampConverter() final DateTime? createdAt,
       @DateTimeTimestampConverter() final DateTime? updatedAt}) = _$_Book;
   const _Book._() : super._();
@@ -237,13 +272,15 @@ abstract class _Book extends Book {
   factory _Book.fromJson(Map<String, dynamic> json) = _$_Book.fromJson;
 
   @override
-  String? get bookId => throw _privateConstructorUsedError;
+  String get bookId => throw _privateConstructorUsedError;
   @override
-  String? get title => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
   @override
   String? get url => throw _privateConstructorUsedError;
   @override
   String? get description => throw _privateConstructorUsedError;
+  @override
+  StorageFile? get image => throw _privateConstructorUsedError;
   @override
   @DateTimeTimestampConverter()
   DateTime? get createdAt => throw _privateConstructorUsedError;

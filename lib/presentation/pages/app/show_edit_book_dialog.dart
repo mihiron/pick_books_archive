@@ -1,3 +1,4 @@
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pick_books/extensions/context_extension.dart';
@@ -5,9 +6,14 @@ import 'package:pick_books/extensions/exception_extension.dart';
 import 'package:pick_books/gen/colors.gen.dart';
 import 'package:pick_books/model/entities/app/book.dart';
 import 'package:pick_books/model/use_cases/app/book_controller.dart';
+import 'package:pick_books/model/use_cases/app/save_book_image.dart';
+import 'package:pick_books/model/use_cases/image_compress.dart';
 import 'package:pick_books/presentation/custom_hooks/use_effect_once.dart';
 import 'package:pick_books/presentation/custom_hooks/use_form_field_state_key.dart';
+import 'package:pick_books/presentation/pages/image_viewer/image_viewer.dart';
+import 'package:pick_books/presentation/widgets/color_circle.dart';
 import 'package:pick_books/presentation/widgets/dialogs/show_content_dialog.dart';
+import 'package:pick_books/presentation/widgets/sheets/show_photo_and_crop_bottom_sheet.dart';
 import 'package:pick_books/presentation/widgets/show_indicator.dart';
 import 'package:pick_books/presentation/widgets/thumbnail.dart';
 import 'package:pick_books/utils/logger.dart';
@@ -52,12 +58,67 @@ class _Dialog extends HookConsumerWidget {
         const Center(
           child: Text('本を登録'),
         ),
-        const Center(
+        Center(
           child: Padding(
-            padding: EdgeInsets.all(8),
-            child: Thumbnail(
-              width: 120,
-              height: 200,
+            padding: const EdgeInsets.all(8),
+            child: Stack(
+              children: [
+                Thumbnail(
+                  width: 120,
+                  height: 200,
+                  url: data?.image?.url,
+                  onTap: () {
+                    final url = data?.image?.url;
+                    if (url != null) {
+                      ImageViewer.show(context, urls: [url]);
+                    }
+                  },
+                ),
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: ColorCircleIcon(
+                    onTap: () async {
+                      final selectedImage = await showPhotoAndCropBottomSheet(
+                        context,
+                        title: '書籍画像',
+                      );
+                      if (selectedImage == null) {
+                        return;
+                      }
+
+                      logger.info(selectedImage.readAsBytesSync().length);
+
+                      /// 圧縮して設定
+                      final compressImage =
+                          await ref.read(imageCompressProvider)(selectedImage);
+                      if (compressImage == null) {
+                        return;
+                      }
+                      logger.info(compressImage.lengthInBytes);
+                      try {
+                        showIndicator(context);
+                        await ref
+                            .read(saveBookImageProvider)
+                            .call(compressImage, data!.bookId);
+                      } on Exception catch (e) {
+                        logger.shout(e);
+                        await showOkAlertDialog(
+                          context: context,
+                          title: '画像を保存できませんでした',
+                        );
+                      } finally {
+                        dismissIndicator(context);
+                      }
+                    },
+                    child: const Icon(
+                      Icons.camera_alt,
+                      color: Colors.white,
+                      size: 12,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

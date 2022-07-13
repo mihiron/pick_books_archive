@@ -8,6 +8,7 @@ import 'package:pick_books/extensions/exception_extension.dart';
 import 'package:pick_books/model/use_cases/app/book_controller.dart';
 import 'package:pick_books/presentation/custom_hooks/use_effect_once.dart';
 import 'package:pick_books/presentation/custom_hooks/use_refresh_controller.dart';
+import 'package:pick_books/presentation/pages/image_viewer/image_viewer.dart';
 import 'package:pick_books/presentation/widgets/smart_refresher_custom.dart';
 import 'package:pick_books/presentation/widgets/thumbnail.dart';
 import 'package:pick_books/utils/logger.dart';
@@ -79,6 +80,7 @@ class BookPage extends HookConsumerWidget {
             refreshController.loadComplete();
           },
           child: ListView.builder(
+            padding: const EdgeInsets.all(24),
             controller: scrollController,
             itemBuilder: (BuildContext context, int index) {
               final data = items[index];
@@ -89,9 +91,6 @@ class BookPage extends HookConsumerWidget {
                     SlidableAction(
                       onPressed: (_) async {
                         final docId = data.bookId;
-                        if (docId == null) {
-                          return;
-                        }
                         final result = await showOkCancelAlertDialog(
                           context: context,
                           title: '削除しますか？',
@@ -118,17 +117,26 @@ class BookPage extends HookConsumerWidget {
                   ],
                 ),
                 child: Card(
+                  margin: const EdgeInsets.all(6),
                   child: ListTile(
                     title: Text(
-                      data.title ?? '',
+                      data.title,
                       style: context.bodyStyle,
                     ),
                     subtitle: Text(
                       data.dateLabel,
                       style: context.smallStyle,
                     ),
-                    trailing: const Thumbnail(
+                    trailing: Thumbnail(
                       width: 40,
+                      height: 60,
+                      url: data.image?.url,
+                      onTap: () {
+                        final url = data.image?.url;
+                        if (url != null) {
+                          ImageViewer.show(context, urls: [url]);
+                        }
+                      },
                     ),
                     onTap: () {
                       showEditBookDialog(context, data: data);
