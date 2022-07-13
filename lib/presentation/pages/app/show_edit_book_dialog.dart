@@ -9,6 +9,7 @@ import 'package:pick_books/presentation/custom_hooks/use_effect_once.dart';
 import 'package:pick_books/presentation/custom_hooks/use_form_field_state_key.dart';
 import 'package:pick_books/presentation/widgets/dialogs/show_content_dialog.dart';
 import 'package:pick_books/presentation/widgets/show_indicator.dart';
+import 'package:pick_books/presentation/widgets/thumbnail.dart';
 import 'package:pick_books/utils/logger.dart';
 
 Future<void> showEditBookDialog(
@@ -30,12 +31,16 @@ class _Dialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     /// カスタムフック
-    final textKey = useFormFieldStateKey();
+    final titleKey = useFormFieldStateKey();
+    final urlKey = useFormFieldStateKey();
+    final descriptionKey = useFormFieldStateKey();
 
     /// カスタムフック
     useEffectOnce(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        textKey.currentState?.didChange(data?.title);
+        titleKey.currentState?.didChange(data?.title);
+        urlKey.currentState?.didChange(data?.url);
+        descriptionKey.currentState?.didChange(data?.description);
       });
       return null;
     });
@@ -44,30 +49,62 @@ class _Dialog extends HookConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        const SizedBox(height: 8),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: TextFormField(
-            key: textKey,
-            initialValue: data?.title,
-            style: context.bodyStyle,
-            validator: (value) => (value == null || value.trim().isEmpty)
-                ? '正しい値を入力してください'
-                : null,
-            decoration: const InputDecoration(
-              labelText: 'テキスト入力',
-              hintText: '',
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: 8,
-                vertical: 8,
-              ),
-              border: OutlineInputBorder(),
+        const Center(
+          child: Text('本を登録'),
+        ),
+        const Center(
+          child: Padding(
+            padding: EdgeInsets.all(8),
+            child: Thumbnail(
+              width: 120,
+              height: 200,
             ),
-            textInputAction: TextInputAction.newline,
-            minLines: 1,
-            maxLines: 3,
-            maxLength: 1024,
           ),
+        ),
+        const SizedBox(height: 8),
+        TextFormField(
+          key: titleKey,
+          initialValue: data?.title,
+          style: context.bodyStyle,
+          validator: (value) =>
+              (value == null || value.trim().isEmpty) ? 'タイトルを入力してください' : null,
+          decoration: const InputDecoration(
+            labelText: 'タイトル',
+            hintText: '',
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 8,
+              vertical: 8,
+            ),
+          ),
+          textInputAction: TextInputAction.next,
+        ),
+        TextFormField(
+          key: urlKey,
+          initialValue: data?.url,
+          style: context.bodyStyle,
+          decoration: const InputDecoration(
+            labelText: 'URL',
+            hintText: '',
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 8,
+              vertical: 8,
+            ),
+          ),
+          textInputAction: TextInputAction.next,
+        ),
+        TextFormField(
+          key: descriptionKey,
+          initialValue: data?.description,
+          style: context.bodyStyle,
+          decoration: const InputDecoration(
+            labelText: '説明',
+            hintText: '',
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 8,
+              vertical: 8,
+            ),
+          ),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 16),
         Center(
@@ -77,23 +114,34 @@ class _Dialog extends HookConsumerWidget {
               shape: const StadiumBorder(),
             ),
             onPressed: () async {
-              if (textKey.currentState?.validate() != true) {
+              if (titleKey.currentState?.validate() != true) {
                 return;
               }
-              final title = textKey.currentState?.value?.trim() ?? '';
+              final title = titleKey.currentState?.value?.trim() ?? '';
+              final url = urlKey.currentState?.value?.trim() ?? '';
+              final description =
+                  descriptionKey.currentState?.value?.trim() ?? '';
               try {
                 context.hideKeyboard();
                 showIndicator(context);
                 if (data != null) {
                   /// 更新
-                  await ref
-                      .read(bookProvider.notifier)
-                      .update(data!.copyWith(title: title));
+                  await ref.read(bookProvider.notifier).update(
+                        data!.copyWith(
+                          title: title,
+                          url: url,
+                          description: description,
+                        ),
+                      );
                   context.showSnackBar('更新しました');
                 } else {
                   /// 新規作成
-                  await ref.read(bookProvider.notifier).create(title, '', '');
-                  context.showSnackBar('作成しました');
+                  await ref.read(bookProvider.notifier).create(
+                        title,
+                        url,
+                        description,
+                      );
+                  context.showSnackBar('登録しました');
                 }
                 dismissIndicator(context);
 
@@ -110,7 +158,7 @@ class _Dialog extends HookConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               child: Text(
-                '投稿する',
+                '登録',
                 style: context.bodyStyle
                     .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
                 maxLines: 1,

@@ -9,6 +9,7 @@ import 'package:pick_books/model/use_cases/app/book_controller.dart';
 import 'package:pick_books/presentation/custom_hooks/use_effect_once.dart';
 import 'package:pick_books/presentation/custom_hooks/use_refresh_controller.dart';
 import 'package:pick_books/presentation/widgets/smart_refresher_custom.dart';
+import 'package:pick_books/presentation/widgets/thumbnail.dart';
 import 'package:pick_books/utils/logger.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -43,16 +44,6 @@ class BookPage extends HookConsumerWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text(
-          'Books',
-          style: context.subtitleStyle.copyWith(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        centerTitle: true,
-      ),
       body: Scrollbar(
         controller: scrollController,
         child: SmartRefresher(
@@ -87,7 +78,7 @@ class BookPage extends HookConsumerWidget {
             }
             refreshController.loadComplete();
           },
-          child: ListView.separated(
+          child: ListView.builder(
             controller: scrollController,
             itemBuilder: (BuildContext context, int index) {
               final data = items[index];
@@ -126,23 +117,25 @@ class BookPage extends HookConsumerWidget {
                     ),
                   ],
                 ),
-                child: ListTile(
-                  title: Text(
-                    data.title ?? '',
-                    style: context.bodyStyle,
+                child: Card(
+                  child: ListTile(
+                    title: Text(
+                      data.title ?? '',
+                      style: context.bodyStyle,
+                    ),
+                    subtitle: Text(
+                      data.dateLabel,
+                      style: context.smallStyle,
+                    ),
+                    trailing: const Thumbnail(
+                      width: 40,
+                    ),
+                    onTap: () {
+                      showEditBookDialog(context, data: data);
+                    },
                   ),
-                  trailing: Text(
-                    data.dateLabel,
-                    style: context.smallStyle,
-                  ),
-                  onTap: () {
-                    showEditBookDialog(context, data: data);
-                  },
                 ),
               );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return const Divider(height: 1);
             },
             itemCount: items.length,
           ),
