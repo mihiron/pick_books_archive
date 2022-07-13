@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../model/entities/storage_file/storage_file.dart';
-import '../../../model/repositories/firestore/document.dart';
-import '../../converters/date_time_timestamp_converter.dart';
+import 'package:pick_books/model/converters/date_time_timestamp_converter.dart';
+import 'package:pick_books/model/entities/storage_file/storage_file.dart';
+import 'package:pick_books/model/repositories/firestore/document.dart';
 
 part 'user.freezed.dart';
 part 'user.g.dart';

@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pick_books/extensions/date_extension.dart';
 import 'package:pick_books/model/converters/date_time_timestamp_converter.dart';
+import 'package:pick_books/model/entities/storage_file/storage_file.dart';
 import 'package:pick_books/model/repositories/firestore/collection_paging_repository.dart';
 import 'package:pick_books/model/repositories/firestore/document.dart';
 
@@ -24,10 +25,11 @@ final bookPagingProvider = Provider.family
 @freezed
 class Book with _$Book {
   const factory Book({
-    String? bookId,
-    String? title,
+    required String bookId,
+    required String title,
     String? url,
     String? description,
+    StorageFile? image,
     @DateTimeTimestampConverter() DateTime? createdAt,
     @DateTimeTimestampConverter() DateTime? updatedAt,
   }) = _Book;
@@ -40,10 +42,18 @@ class Book with _$Book {
   static CollectionReference<SnapType> colRef(String userId) =>
       Document.colRef(collectionPath(userId));
 
-  static String docPath(String userId, String id) =>
-      '${collectionPath(userId)}/$id';
-  static DocumentReference<SnapType> docRef(String userId, String id) =>
-      Document.docRefWithDocPath(docPath(userId, id));
+  static String docPath(String userId, String bookId) =>
+      '${collectionPath(userId)}/$bookId';
+
+  static DocumentReference<SnapType> docRef(String userId, String bookId) =>
+      Document.docRefWithDocPath(docPath(userId, bookId));
+
+  static String imagePath(
+    String userId,
+    String bookId,
+    String filename,
+  ) =>
+      '${docPath(userId, bookId)}/image/$filename';
 
   Map<String, dynamic> get toCreateDoc => <String, dynamic>{
         'bookId': bookId,
@@ -58,6 +68,22 @@ class Book with _$Book {
         'title': title,
         'url': url,
         'description': description,
+        'updatedAt': FieldValue.serverTimestamp(),
+      };
+
+  Map<String, dynamic> get toDocWithNotImage {
+    final data = <String, dynamic>{
+      ...toJson(),
+      'createdAt': createdAt ?? FieldValue.serverTimestamp(),
+      'updatedAt': FieldValue.serverTimestamp(),
+    }..remove('image');
+    return data;
+  }
+
+  Map<String, dynamic> get toImageOnly => <String, dynamic>{
+        'bookId': bookId,
+        'image': image?.toJson(),
+        'createdAt': createdAt ?? FieldValue.serverTimestamp(),
         'updatedAt': FieldValue.serverTimestamp(),
       };
 

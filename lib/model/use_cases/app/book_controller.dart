@@ -74,6 +74,20 @@ class BookController extends StateNotifier<List<Book>> {
     ];
   }
 
+  /// 一つだけ取得
+  Future<Book?> fetchOne(String bookId) async {
+    final userId = _firebaseAuthRepository.loggedInUserId;
+    if (userId == null) {
+      throw AppException(title: 'ログインしてください');
+    }
+    final docId = bookId;
+    final data = await _documentRepository.fetch(
+      Book.docPath(userId, docId),
+      decode: Book.fromJson,
+    );
+    return data.entity;
+  }
+
   /// 作成
   Future<void> create(String title, String? url, String? description) async {
     final userId = _firebaseAuthRepository.loggedInUserId;
@@ -104,9 +118,6 @@ class BookController extends StateNotifier<List<Book>> {
       throw AppException(title: 'ログインしてください');
     }
     final docId = book.bookId;
-    if (docId == null) {
-      return;
-    }
     final data = book.copyWith(updatedAt: DateTime.now());
     await _documentRepository.update(
       Book.docPath(userId, docId),
