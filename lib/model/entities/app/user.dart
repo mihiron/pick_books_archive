@@ -15,7 +15,7 @@ class User with _$User {
     required String email,
     String? name,
     StorageFile? image,
-    int? bookCount,
+    @Default(0) int bookCount,
     @DateTimeTimestampConverter() DateTime? createdAt,
     @DateTimeTimestampConverter() DateTime? updatedAt,
   }) = _User;
